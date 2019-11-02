@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.1",
+    "@types/nedb": "^1.8.9",
     "husky": "^3.0.1",
     "jest": "^24.8.0",
     "prettier": "^1.18.2",
@@ -27,6 +28,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "http-exception": "0.0.2"
+    "http-exception": "0.0.2",
+    "nedb": "^1.8.0"
   }
 }

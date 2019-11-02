@@ -19,8 +19,8 @@ yarn add --dev buildmon
 ## Feedback
 
 Have a bug or feature request? [Please open a new
-issue.](https://github.com/buildmon/buildmon/issues/new)
+issue.](https://github.com/vdrn/buildmon/issues/new)
 
 ## License
 
-[GPLv2](https://github.com/buildmon/buildmon/blob/master/LICENSE)
+[GPLv2](https://github.com/vdrn/buildmon/blob/master/LICENSE)
