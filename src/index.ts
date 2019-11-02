@@ -1,7 +1,7 @@
 import express from 'express'
 import HttpException from 'http-exception'
-import routers from './routers'
 import { createDb } from './db'
+import routers from './routers'
 import pkg from '../package.json'
 
 console.log(`Launching ${pkg.name} v${pkg.version}`)

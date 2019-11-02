@@ -5,7 +5,7 @@
   "description": "View and interact with your project build history over time",
   "main": "dist/src/index.js",
   "license": "GPL-2.0-only",
-  "repository": "https://github.com/buildmon/buildmon.git",
+  "repository": "https://github.com/vdrn/buildmon.git",
   "scripts": {
     "build": "tsc",
     "format": "prettier --no-semi --single-quote --write ./**/*.ts",
