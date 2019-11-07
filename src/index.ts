@@ -4,19 +4,23 @@ import { createDb } from './db'
 import routers from './routers'
 import pkg from '../package.json'
 
-console.log(`Launching ${pkg.name} v${pkg.version}`)
+const main = async () => {
+  console.log(`Launching ${pkg.name} v${pkg.version}`)
 
-const app = express()
+  const app = express()
 
-app.set('db', createDb())
+  app.set('db', await createDb())
 
-app.use(express.json())
+  app.use(express.json())
 
-app.use('/', ...routers)
-app.use(() => {
-  throw HttpException.notFound()
-})
+  app.use('/', ...routers)
+  app.use(() => {
+    throw HttpException.notFound()
+  })
 
-app.listen(8080, () =>
-  console.log(`App ${pkg.name} started listening on port 8080`)
-)
+  app.listen(8080, () =>
+    console.log(`App ${pkg.name} started listening on port 8080`)
+  )
+}
+
+main()

@@ -9,13 +9,9 @@ router
   .get((req, res, next) => {
     const db: Db = req.app.get('db')
 
-    db.captures.find({}, (error, docs) => {
-      if (error) {
-        return next(HttpException.internalServerError())
-      }
-
-      res.json(docs)
-    })
+    db.captures.read()
+      .then(captures => res.json(captures.get('state')))
+      .catch(error => next(HttpException.internalServerError()))
   })
 
 export default router
