@@ -1,7 +1,8 @@
 import express from 'express'
 import HttpException from 'http-exception'
 import lodash from 'lodash'
-import { Db } from '../../db'
+import { Stats } from '../models'
+import { createId, Db } from '../../db'
 
 const router = express.Router()
 
@@ -12,12 +13,17 @@ router
 
     db.stats
       .read()
-      .then(stats => {
-        const state = <lodash.CollectionChain<any[]>>stats.get('state')
+      .then(collection => {
+        const state = <lodash.CollectionChain<Stats>>collection.get('state')
+
+        const stats: Stats = {
+          ...req.body,
+          id: createId()
+        }
         
-        return state.push(req.body).write()
+        return state.push(stats).last().write()
       })
-      .then(stats => res.json(req.body))
+      .then(stats => res.json(stats))
       .catch(error => next(HttpException.internalServerError()))
   })
 

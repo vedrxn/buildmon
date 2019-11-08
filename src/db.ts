@@ -1,4 +1,5 @@
 import lowdb from 'lowdb'
+import nanoid from 'nanoid'
 import FileAsync from 'lowdb/adapters/FileAsync'
 
 export interface Db {
@@ -26,3 +27,5 @@ export const createDb = (): Promise<Db> => {
     stats: collections[1]
   }))
 }
+
+export const createId = nanoid
