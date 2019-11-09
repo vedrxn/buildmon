@@ -18,9 +18,22 @@ const main = async () => {
     throw HttpException.notFound()
   })
 
+  app.use((err, req, res, next) => {
+    const _err = err instanceof Error ? err : new Error()
+
+    const error =
+      _err instanceof HttpException ? _err : new HttpException(err.message)
+
+    res.status(error.status).json({
+      ...error,
+      message: error.message,
+      stack: error.stack
+    })
+  })
+
   app.listen(8080, () =>
     console.log(`App ${pkg.name} started listening on port 8080`)
   )
 }
 
-main()
+main().catch(console.log)
