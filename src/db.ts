@@ -1,3 +1,4 @@
+import to from 'await-to-ts'
 import lowdb from 'lowdb'
 import nanoid from 'nanoid'
 import FileAsync from 'lowdb/adapters/FileAsync'
@@ -12,7 +13,7 @@ enum File {
   Stats = './tmp/stats-collection.json'
 }
 
-export const createDb = (): Promise<Db> => {
+export const createDb = async (): Promise<Db> => {
   const files = [File.Captures, File.Stats]
   const promises = files.map(file => {
     const adapter = new FileAsync(file, {
@@ -22,10 +23,17 @@ export const createDb = (): Promise<Db> => {
     return lowdb(adapter)
   })
 
-  return Promise.all(promises).then(collections => ({
-    captures: collections[0],
-    stats: collections[1]
-  }))
+
+  const [error, [captures, stats]] = await to(Promise.all(promises))
+
+  if (error) {
+    throw error
+  }
+
+  return {
+    captures,
+    stats
+  }
 }
 
 export const createId = nanoid
