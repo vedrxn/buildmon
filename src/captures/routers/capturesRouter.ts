@@ -1,17 +1,16 @@
 import express from 'express'
-import HttpException from 'http-exception'
+import asyncHandler from 'express-async-handler'
+import { selectCapturesDocuments } from '../collections/captures'
 import { Db } from '../../db'
 
 const router = express.Router()
 
-router
-  .route('/captures')
-  .get((req, res, next) => {
+router.route('/captures').get(
+  asyncHandler(async (req, res, next) => {
     const db: Db = req.app.get('db')
 
-    db.captures.read()
-      .then(captures => res.json(captures.get('state')))
-      .catch(error => next(HttpException.internalServerError()))
+    res.json(await selectCapturesDocuments(db))
   })
+)
 
 export default router

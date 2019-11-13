@@ -1,30 +1,41 @@
 import express from 'express'
-import HttpException from 'http-exception'
+import asyncHandler from 'express-async-handler'
 import lodash from 'lodash'
-import { Stats } from '../models'
-import { createId, Db } from '../../db'
+import {
+  getActiveCapture,
+  insertCapture,
+  selectCapturesDocuments,
+  updateCapture
+} from '../../captures/collections/captures'
+import {
+  addCaptureStats,
+  Capture,
+  createEphemeralCapture
+} from '../../captures/models/capture'
+import { Db } from '../../db'
+import { insertStats, selectStatsDocuments } from '../collections/stats'
+import { createStats, Stats } from '../models/stats'
 
 const router = express.Router()
 
-router
-  .route('/stats')
-  .post((req, res, next) => {
+router.route('/stats').post(
+  asyncHandler(async (req, res, next) => {
     const db: Db = req.app.get('db')
 
-    db.stats
-      .read()
-      .then(collection => {
-        const state = <lodash.CollectionChain<Stats>>collection.get('state')
+    const capturesDocuments = await selectCapturesDocuments(db)
 
-        const stats: Stats = {
-          ...req.body,
-          id: createId()
-        }
-        
-        return state.push(stats).last().write()
-      })
-      .then(stats => res.json(stats))
-      .catch(error => next(HttpException.internalServerError()))
+    const activeCapture = getActiveCapture(capturesDocuments.value())
+    const _activeCapture = await (activeCapture
+      ? Promise.resolve(activeCapture)
+      : insertCapture(db, createEphemeralCapture({ active: true })))
+
+    const statsDocuments = await selectStatsDocuments(db)
+    const stats = await insertStats(db, createStats(req.body))
+
+    await updateCapture(db, addCaptureStats(_activeCapture, stats))
+
+    res.json(stats)
   })
+)
 
 export default router
