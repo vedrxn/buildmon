@@ -1,4 +1,4 @@
-import { createId } from '../../db'
+import { createId } from '../../db/db'
 import { Stats } from '../../stats/models/stats'
 
 export enum CaptureType {

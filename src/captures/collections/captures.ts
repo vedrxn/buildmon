@@ -1,15 +1,12 @@
 import lodash from 'lodash'
-import { Capture } from '../models/capture'
-import { Db } from '../../db'
+import { Capture, CaptureType } from '../models/capture'
+import { Db } from '../../db/model'
 
 export const selectCapturesDocuments = async (db: Db) => {
   const collection = await db.captures.read()
 
   return <lodash.CollectionChain<Capture>>collection.get('documents')
 }
-
-export const getActiveCapture = (captures: Capture[]): Capture | undefined =>
-  captures.find(capture => Boolean(capture.active))
 
 export const insertCapture = async (
   db: Db,
@@ -38,3 +35,43 @@ export const updateCapture = async (
 
   return capture
 }
+
+export const deleteCapture = async (
+  db: Db,
+  capture: Capture
+): Promise<undefined> => {
+  const documents = await selectCapturesDocuments(db)
+
+  await documents.remove({ id: capture.id }).write()
+
+  return undefined
+}
+
+export const setActiveCapture = async (db: Db, capture: Capture) => {
+  const documents = await selectCapturesDocuments(db)
+
+  await documents
+    .map(capture => ({
+      ...capture,
+      active: false
+    }))
+    .write()
+
+  const activeCapture = {
+    ...capture,
+    active: true
+  }
+
+  await updateCapture(db, activeCapture)
+}
+
+export const getCapturesByType = (
+  type: CaptureType,
+  captures: Capture[]
+): Capture[] => captures.filter(capture => capture.type === type)
+
+export const getEphemeralCapture = (captures: Capture[]): Capture | undefined =>
+  getCapturesByType(CaptureType.Ephemeral, captures)[0]
+
+export const getActiveCapture = (captures: Capture[]): Capture | undefined =>
+  captures.find(capture => Boolean(capture.active))

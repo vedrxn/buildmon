@@ -1,5 +1,5 @@
 import lodash from 'lodash'
-import { Db } from '../../db'
+import { Db } from '../../db/model'
 import { Stats } from '../models/stats'
 
 export const selectStatsDocuments = async (db: Db) => {

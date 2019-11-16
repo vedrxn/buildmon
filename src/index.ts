@@ -1,6 +1,6 @@
 import express from 'express'
 import HttpException from 'http-exception'
-import { createDb } from './db'
+import { createDb } from './db/db'
 import routers from './routers'
 import pkg from '../package.json'
 
@@ -18,6 +18,7 @@ const main = async () => {
     throw HttpException.notFound()
   })
 
+  // @ts-ignore
   app.use((err, req, res, next) => {
     const _err = err instanceof Error ? err : new Error()
 

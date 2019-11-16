@@ -1,4 +1,4 @@
-import { createId } from '../../db'
+import { createId } from '../../db/db'
 
 export interface Stats {
   [key: string]: any
