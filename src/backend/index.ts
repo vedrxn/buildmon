@@ -2,7 +2,7 @@ import express from 'express'
 import HttpException from 'http-exception'
 import { createDb } from './db/db'
 import routers from './routers'
-import pkg from '../package.json'
+import pkg from '../../package.json'
 
 const main = async () => {
   console.log(`Launching ${pkg.name} v${pkg.version}`)
@@ -13,12 +13,12 @@ const main = async () => {
 
   app.use(express.json())
 
-  app.use('/', ...routers)
+  app.use('/api', ...routers)
   app.use(() => {
     throw HttpException.notFound()
   })
 
-  // @ts-ignore
+  // @ts-ignore @types/express doesn't recognize this signature
   app.use((err, req, res, next) => {
     const _err = err instanceof Error ? err : new Error()
 
