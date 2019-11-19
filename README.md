@@ -6,12 +6,12 @@ A [monorepo](https://danluu.com/monorepo/) containing the buildmon frontend,
 backend, compiler-stats parsers (soon™), and cli (soon™). The project may move
 to a multirepo approach at some point in the future as it stablizes.
 
-Links
+## Links
 
-Buildmon github source links:
+Convenient buildmon github source links:
 
-[Frontend](https://github.com/vdrn/buildmon/src/frontend)
-[Backend](https://github.com/vdrn/buildmon/src/backend)
+* [Frontend](https://github.com/vdrn/buildmon/src/frontend)
+* [Backend](https://github.com/vdrn/buildmon/src/backend)
 
 ## Install
 
