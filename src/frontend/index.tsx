@@ -1,5 +1,5 @@
 import React from 'react'
 import { render } from 'react-dom'
-import App from './App.tsx'
+import Root from './Root.tsx'
 
-render(<App />, document.getElementById('root'))
+render(<Root />, document.getElementById('root'))

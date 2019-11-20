@@ -10,8 +10,8 @@ to a multirepo approach at some point in the future as it stablizes.
 
 Convenient buildmon github source links:
 
-* [Frontend](https://github.com/vdrn/buildmon/src/frontend)
-* [Backend](https://github.com/vdrn/buildmon/src/backend)
+* [Frontend](https://github.com/vdrn/buildmon/tree/master/src/frontend)
+* [Backend](https://github.com/vdrn/buildmon/tree/master/src/backend)
 
 ## Install
 
