@@ -14,7 +14,8 @@ const outputDir = path.join(distDir, 'frontend')
 
 module.exports = {
   devServer: {
-    contentBase: outputDir
+    contentBase: outputDir,
+    historyApiFallback: true
   },
   devtool: 'source-map',
   entry: path.join(inputDir, 'index.tsx'),
@@ -37,6 +38,13 @@ module.exports = {
         enforce: 'pre',
         loader: 'source-map-loader',
         test: /.js$/,
+      },
+      {
+        test: /.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
       }
     ]
   },
