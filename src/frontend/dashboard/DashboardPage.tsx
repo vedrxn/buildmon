@@ -1,11 +1,12 @@
 import React from 'react'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
+import Sidebar from './sidebar/Sidebar'
 
 export default () => (
   <Row noGutters>
     <Col>
-      <ul className="list-unstyled">captures-list</ul>
+      <Sidebar />
     </Col>
     <Col>
       <main>main-content</main>

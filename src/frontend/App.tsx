@@ -7,15 +7,8 @@ import DashboardPage from './dashboard/DashboardPage.tsx'
 
 export default () => (
   <Container className="p-0" fluid>
-    <Row noGutters>
-      <Col>
-        <nav>nav-bar</nav>
-      </Col>
-      <Col as="main">
-        <Route path="/">
-          <DashboardPage />
-        </Route>
-      </Col>
-    </Row>
+    <Route path="/">
+      <DashboardPage />
+    </Route>
   </Container>
 )
