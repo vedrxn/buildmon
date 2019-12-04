@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import CapturesList from './CapturesList'
 import SidebarControls from './SidebarControls'
 
 export default () => {
@@ -10,7 +11,7 @@ export default () => {
         onQueryChange={event => setQuery(event.currentTarget.value)}
         query={query}
       />
-      <ul className="list-unstyled">captures-list</ul>
+      <CapturesList captures={[]} />
     </div>
   )
 }
