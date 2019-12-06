@@ -2,7 +2,11 @@ import React, { useState } from 'react'
 import CapturesList from './CapturesList'
 import SidebarControls from './SidebarControls'
 
-export default () => {
+interface Props {
+  captures: any[]
+}
+
+export default (props: Props) => {
   const [query, setQuery] = useState('')
 
   return (
@@ -11,7 +15,7 @@ export default () => {
         onQueryChange={event => setQuery(event.currentTarget.value)}
         query={query}
       />
-      <CapturesList captures={[]} />
+      <CapturesList captures={props.captures} />
     </div>
   )
 }
