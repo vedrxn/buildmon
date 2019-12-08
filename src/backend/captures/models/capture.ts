@@ -10,19 +10,26 @@ export enum CaptureType {
 export interface Capture {
   active: boolean
   id: string
+  name: string
   stats: string[]
   type: keyof typeof CaptureType
 }
 
-export const createEphemeralCapture = (
-  options?: Partial<Capture>
-): Capture => ({
+export const createCapture = (options?: {}): Capture => ({
   active: false,
   id: createId(),
+  name: 'Buildmon Capture',
   stats: [],
-  type: CaptureType.Ephemeral,
+  type: CaptureType.Session,
   ...options
 })
+
+export const createEphemeralCapture = (options?: {}): Capture =>
+  createCapture({
+    name: 'Ephemeral Capture',
+    type: CaptureType.Ephemeral,
+    ...options
+  })
 
 export const addCaptureStats = (capture: Capture, stats: Stats): Capture => ({
   ...capture,

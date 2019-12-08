@@ -10,7 +10,7 @@
     "build:backend": "tsc --outDir ./dist/backend --project ./tsconfig.backend.json",
     "build:frontend": "webpack",
     "format": "prettier --no-semi --single-quote --write './**/*.ts?(x)'",
-    "lint": "tsc --noEmit",
+    "lint": "tsc --noEmit --project ./tsconfig.backend.json",
     "start:backend": "node ./dist/backend/src/backend/index.js",
     "start:frontend": "webpack-dev-server",
     "test": "jest"

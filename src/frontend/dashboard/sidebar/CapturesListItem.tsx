@@ -6,6 +6,6 @@ interface Props {
 
 export default (props: Props) => (
   <li>
-    <div>{props.capture.id}</div>
+    <div>{props.capture.name}</div>
   </li>
 )

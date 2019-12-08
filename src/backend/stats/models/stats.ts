@@ -5,7 +5,7 @@ export interface Stats {
   id: string
 }
 
-export const createStats = (options?: Partial<Stats>): Stats => ({
+export const createStats = (options?: {}): Stats => ({
   id: createId(),
   ...options
 })

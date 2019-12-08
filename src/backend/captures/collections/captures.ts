@@ -49,20 +49,21 @@ export const deleteCapture = async (
 
 export const setActiveCapture = async (db: Db, capture: Capture) => {
   const documents = await selectCapturesDocuments(db)
+  const oldActiveCapture = getActiveCapture(documents.value())
 
-  await documents
-    .map(capture => ({
-      ...capture,
+  if (oldActiveCapture) {
+    await updateCapture(db, {
+      ...oldActiveCapture,
       active: false
-    }))
-    .write()
+    })
+  }
 
-  const activeCapture = {
+  const newActiveCapture = {
     ...capture,
     active: true
   }
 
-  await updateCapture(db, activeCapture)
+  return await updateCapture(db, newActiveCapture)
 }
 
 export const getCapturesByType = (
