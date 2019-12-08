@@ -12,10 +12,15 @@ const distDir = path.join(projectDir, 'dist')
 const inputDir = path.join(srcDir, 'frontend')
 const outputDir = path.join(distDir, 'frontend')
 
+const backendHost = 'localhost:8081'
+
 module.exports = {
   devServer: {
     contentBase: outputDir,
-    historyApiFallback: true
+    historyApiFallback: true,
+    proxy: {
+      '/api': `http://${backendHost}`
+    }
   },
   devtool: 'source-map',
   entry: path.join(inputDir, 'index.tsx'),

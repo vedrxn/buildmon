@@ -1,1 +1,3 @@
-export const getCaptures = () => Promise.resolve([])
+import axios from 'axios'
+
+export const getCaptures = () => axios.get('/api/captures')

@@ -11,7 +11,6 @@ interface Props {
 }
 
 const DashboardPage = (props: Props) => {
-  props.dispatch
   useEffect(() => {
     props
       .dispatch(getCaptures())

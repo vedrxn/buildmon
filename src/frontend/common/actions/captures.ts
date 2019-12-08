@@ -24,5 +24,5 @@ export const getCaptures = () => (dispatch: any) => {
 
   return api
     .getCaptures()
-    .then(captures => dispatch(getCapturesSuccess(captures)))
+    .then(response => dispatch(getCapturesSuccess(response.data)))
 }
