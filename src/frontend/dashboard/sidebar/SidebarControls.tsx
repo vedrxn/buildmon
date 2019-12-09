@@ -7,12 +7,13 @@ import FormGroup from 'react-bootstrap/FormGroup'
 
 interface Props {
   onQueryChange: React.ReactEventHandler<HTMLInputElement>
+  onQuerySubmit: React.ReactEventHandler<HTMLFormElement>
   query: string
 }
 
 export default (props: Props) => (
   <div className="d-flex">
-    <Form>
+    <Form autoComplete="off" onSubmit={props.onQuerySubmit}>
       <FormGroup
         className="mb-0 mr-2"
         controlId="sidebar-controls-search-input"

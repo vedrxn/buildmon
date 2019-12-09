@@ -9,13 +9,17 @@ interface Props {
 export default (props: Props) => {
   const [query, setQuery] = useState('')
 
+  const regExp = new RegExp(query.trim(), 'i')
+  const captures = props.captures.filter(capture => regExp.test(capture.name))
+
   return (
     <div>
       <SidebarControls
         onQueryChange={event => setQuery(event.currentTarget.value)}
+        onQuerySubmit={event => event.preventDefault()}
         query={query}
       />
-      <CapturesList captures={props.captures} />
+      <CapturesList captures={captures} />
     </div>
   )
 }
