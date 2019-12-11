@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import { getCaptures, getCapturesError } from '../common/actions/captures'
+import { connect } from 'react-redux'
+import { getCaptures, getCapturesError } from '../common/actions/getCaptures'
 import Sidebar from './sidebar/Sidebar'
 
 interface Props {

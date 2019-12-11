@@ -19,10 +19,11 @@ export const getCapturesSuccess = (payload: any[]) => ({
   type: GET_CAPTURES_SUCCESS
 })
 
-export const getCaptures = () => (dispatch: any) => {
+export const getCaptures = () => async (dispatch: any) => {
   dispatch(getCapturesRequest())
 
-  return api
-    .getCaptures()
-    .then(response => dispatch(getCapturesSuccess(response.data)))
+  const response = await api.getCaptures()
+  dispatch(getCapturesSuccess(response.data))
+
+  return response.data
 }

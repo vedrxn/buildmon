@@ -2,7 +2,7 @@ import {
   GET_CAPTURES_ERROR,
   GET_CAPTURES_REQUEST,
   GET_CAPTURES_SUCCESS
-} from '../actions/captures'
+} from '../actions/getCaptures'
 
 interface Action {
   error?: boolean
