@@ -1,3 +1,4 @@
+import { CREATE_CAPTURE_SUCCESS } from '../actions/createCapture'
 import {
   GET_CAPTURES_ERROR,
   GET_CAPTURES_REQUEST,
@@ -19,10 +20,16 @@ const initialState = {
 
 export default (state = initialState, action: Action) => {
   switch (action.type) {
+    case CREATE_CAPTURE_SUCCESS:
+      return {
+        ...state,
+        items: [...state.items, action.payload]
+      }
     case GET_CAPTURES_ERROR:
       return {
         ...state,
-        error: true
+        error: true,
+        loading: false
       }
     case GET_CAPTURES_REQUEST:
       return {
@@ -33,9 +40,8 @@ export default (state = initialState, action: Action) => {
     case GET_CAPTURES_SUCCESS:
       return {
         ...state,
-        error: false,
-        items: action.payload,
-        loading: false
+        loading: false,
+        items: action.payload
       }
     default:
       return state
