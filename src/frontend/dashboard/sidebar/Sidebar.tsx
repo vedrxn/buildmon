@@ -4,9 +4,14 @@ import SidebarControls from './SidebarControls'
 
 interface Props {
   captures: any[]
+  isCapturesLoaded: boolean
 }
 
 export default (props: Props) => {
+  if (!props.isCapturesLoaded) {
+    return <div>Loading</div>
+  }
+
   const [query, setQuery] = useState('')
 
   const regExp = new RegExp(query.trim(), 'i')

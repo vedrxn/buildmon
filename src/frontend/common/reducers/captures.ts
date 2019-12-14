@@ -14,6 +14,7 @@ interface Action {
 
 const initialState = {
   error: false,
+  loaded: false,
   loading: false,
   items: []
 }
@@ -29,6 +30,7 @@ export default (state = initialState, action: Action) => {
       return {
         ...state,
         error: true,
+        loaded: false,
         loading: false
       }
     case GET_CAPTURES_REQUEST:
@@ -40,6 +42,7 @@ export default (state = initialState, action: Action) => {
     case GET_CAPTURES_SUCCESS:
       return {
         ...state,
+        loaded: true,
         loading: false,
         items: action.payload
       }
