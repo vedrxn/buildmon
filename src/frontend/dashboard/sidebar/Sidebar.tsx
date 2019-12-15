@@ -21,7 +21,6 @@ export default (props: Props) => {
     <div>
       <SidebarControls
         onQueryChange={event => setQuery(event.currentTarget.value)}
-        onQuerySubmit={event => event.preventDefault()}
         query={query}
       />
       <CapturesList captures={captures} />
