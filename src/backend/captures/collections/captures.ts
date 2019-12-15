@@ -74,5 +74,8 @@ export const getCapturesByType = (
 export const getEphemeralCapture = (captures: Capture[]): Capture | undefined =>
   getCapturesByType(CaptureType.Ephemeral, captures)[0]
 
+export const getHistoryCapture = (captures: Capture[]): Capture | undefined =>
+  getCapturesByType(CaptureType.History, captures)[0]
+
 export const getActiveCapture = (captures: Capture[]): Capture | undefined =>
   captures.find(capture => Boolean(capture.active))

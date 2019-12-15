@@ -31,6 +31,13 @@ export const createEphemeralCapture = (options?: {}): Capture =>
     ...options
   })
 
+export const createHistoryCapture = (options?: {}): Capture =>
+  createCapture({
+    name: 'History Capture',
+    type: CaptureType.History,
+    ...options
+  })
+
 export const addCaptureStats = (capture: Capture, stats: Stats): Capture => ({
   ...capture,
   stats: [...capture.stats, stats.id]

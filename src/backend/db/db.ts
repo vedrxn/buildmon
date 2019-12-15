@@ -4,11 +4,16 @@ import nanoid from 'nanoid'
 import {
   deleteCapture,
   getEphemeralCapture,
+  getHistoryCapture,
   insertCapture,
   setActiveCapture,
   selectCapturesDocuments
 } from '../captures/collections/captures'
-import { CaptureType, createEphemeralCapture } from '../captures/models/capture'
+import {
+  CaptureType,
+  createEphemeralCapture,
+  createHistoryCapture
+} from '../captures/models/capture'
 import { Db, File } from './model'
 
 const initDb = async (): Promise<Db> => {
@@ -34,9 +39,15 @@ export const createDb = async (): Promise<Db> => {
   const db = await initDb()
 
   const capturesDocuments = await selectCapturesDocuments(db)
-  const oldEphemeralCapture = await getEphemeralCapture(
-    capturesDocuments.value()
-  )
+  const captures = capturesDocuments.value()
+
+  const historyCapture = await getHistoryCapture(captures)
+
+  if (!historyCapture) {
+    await insertCapture(db, createHistoryCapture())
+  }
+
+  const oldEphemeralCapture = await getEphemeralCapture(captures)
 
   if (oldEphemeralCapture) {
     await deleteCapture(db, oldEphemeralCapture)
