@@ -7,7 +7,7 @@ import {
   selectCapturesDocuments,
   updateCapture
 } from '../../captures/collections/captures'
-import { addCaptureStats, Capture } from '../../captures/models/capture'
+import { Capture, utc } from '../../captures/models/capture'
 import { Db } from '../../db/model'
 import { insertStats } from '../collections/stats'
 import { createStats, Stats } from '../models/stats'
@@ -27,7 +27,11 @@ router.route('/stats').post(
 
     const stats = await insertStats(db, createStats(req.body))
 
-    await updateCapture(db, addCaptureStats(activeCapture, stats))
+    await updateCapture(db, {
+      ...activeCapture,
+      modifiedDate: utc(),
+      stats: [...activeCapture.stats, stats.id]
+    })
 
     res.json(stats)
   })

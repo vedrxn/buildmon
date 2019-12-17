@@ -9,20 +9,30 @@ export enum CaptureType {
 
 export interface Capture {
   active: boolean
+  createdDate: string
   id: string
+  modifiedDate: string
   name: string
   stats: string[]
   type: keyof typeof CaptureType
 }
 
-export const createCapture = (options?: {}): Capture => ({
-  active: false,
-  id: createId(),
-  name: 'Buildmon Capture',
-  stats: [],
-  type: CaptureType.Session,
-  ...options
-})
+export const utc = () => new Date().toUTCString()
+
+export const createCapture = (options?: {}): Capture => {
+  const date = utc()
+
+  return {
+    active: false,
+    createdDate: date,
+    id: createId(),
+    modifiedDate: date,
+    name: 'Buildmon Capture',
+    stats: [],
+    type: CaptureType.Session,
+    ...options
+  }
+}
 
 export const createEphemeralCapture = (options?: {}): Capture =>
   createCapture({
@@ -37,8 +47,3 @@ export const createHistoryCapture = (options?: {}): Capture =>
     type: CaptureType.History,
     ...options
   })
-
-export const addCaptureStats = (capture: Capture, stats: Stats): Capture => ({
-  ...capture,
-  stats: [...capture.stats, stats.id]
-})
