@@ -7,6 +7,6 @@ export interface Db {
 }
 
 export enum File {
-  Captures = './tmp/captures-collection.json',
-  Stats = './tmp/stats-collection.json'
+  Captures = 'captures-collection.json',
+  Stats = 'stats-collection.json'
 }

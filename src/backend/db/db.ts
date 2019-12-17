@@ -1,3 +1,4 @@
+import path from 'path'
 import lowdb from 'lowdb'
 import FileAsync from 'lowdb/adapters/FileAsync'
 import nanoid from 'nanoid'
@@ -14,13 +15,14 @@ import {
   createEphemeralCapture,
   createHistoryCapture
 } from '../captures/models/capture'
+import conf from '../conf'
 import { Db, File } from './model'
 
 const initDb = async (): Promise<Db> => {
-  const files = [File.Captures, File.Stats]
+  const promises = Object.values(File).map(file => {
+    const filePath = path.join(conf.confDir, file)
 
-  const promises = files.map(file => {
-    const adapter = new FileAsync(file, {
+    const adapter = new FileAsync(filePath, {
       defaultValue: { documents: [] }
     })
 

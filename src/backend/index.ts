@@ -1,11 +1,14 @@
 import express from 'express'
 import HttpException from 'http-exception'
+import { createConfDir } from './conf'
 import { createDb } from './db/db'
 import routers from './routers'
 import pkg from '../../package.json'
 
 const main = async () => {
   console.log(`Launching ${pkg.name} v${pkg.version}`)
+
+  await createConfDir()
 
   const app = express()
 
