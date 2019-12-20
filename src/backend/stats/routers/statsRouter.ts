@@ -9,32 +9,51 @@ import {
 } from '../../captures/collections/captures'
 import { Capture, utc } from '../../captures/models/capture'
 import { Db } from '../../db/model'
-import { insertStats } from '../collections/stats'
+import {
+  getStatsByIds,
+  insertStats,
+  selectStatsDocuments
+} from '../collections/stats'
 import { createStats, Stats } from '../models/stats'
 
 const router = express.Router()
 
-router.route('/stats').post(
-  asyncHandler(async (req, res, next) => {
-    const db: Db = req.app.get('db')
+router
+  .route('/stats')
+  .get(
+    asyncHandler(async (req, res) => {
+      const db: Db = req.app.get('db')
 
-    const capturesDocuments = await selectCapturesDocuments(db)
-    const activeCapture = getActiveCapture(capturesDocuments.value())
+      const statsDocuments = await selectStatsDocuments(db)
 
-    if (!activeCapture) {
-      return next(HttpException.internalServerError())
-    }
+      const stats = req.query.ids
+        ? getStatsByIds(statsDocuments.value(), req.query.ids)
+        : statsDocuments.value()
 
-    const stats = await insertStats(db, createStats(req.body))
-
-    await updateCapture(db, {
-      ...activeCapture,
-      modifiedDate: utc(),
-      stats: [...activeCapture.stats, stats.id]
+      res.json(stats)
     })
+  )
+  .post(
+    asyncHandler(async (req, res, next) => {
+      const db: Db = req.app.get('db')
 
-    res.json(stats)
-  })
-)
+      const capturesDocuments = await selectCapturesDocuments(db)
+      const activeCapture = getActiveCapture(capturesDocuments.value())
+
+      if (!activeCapture) {
+        return next(HttpException.internalServerError())
+      }
+
+      const stats = await insertStats(db, createStats(req.body))
+
+      await updateCapture(db, {
+        ...activeCapture,
+        modifiedDate: utc(),
+        stats: [...activeCapture.stats, stats.id]
+      })
+
+      res.json(stats)
+    })
+  )
 
 export default router

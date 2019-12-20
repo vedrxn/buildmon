@@ -16,3 +16,14 @@ export const insertStats = async (db: Db, stats: Stats): Promise<Stats> => {
     .last()
     .write()
 }
+
+export const getStatsByIds = (stats: Stats[], ids: string[]): Stats[] =>
+  ids.reduce((items: Stats[], id) => {
+    const item = stats.find(item => item.id === id)
+
+    if (!item) {
+      return items
+    }
+
+    return items.concat(item)
+  }, [])
